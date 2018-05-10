@@ -1,31 +1,42 @@
 from time import sleep
 from sys import maxsize
 from random import randint
+from formatting import to_binary, print_binary
 
-def to_binary(n):
-	b = '{0:b}'.format(n)
-	while (len(b)%4) != 0:
-			b = '0' + b	
-	print(b)
-	return b
-
-def xor(p):
-	q = randint(0,maxsize)
+def XOR(p):
+	q = randint(0,2^64)
 	arr  = [p , q]
-	to_binary(p)
-	to_binary(q)
+	print_binary(p,2^64)
+	print_binary(q,2^64)
 
-	for i in range(maxsize):
-		y = arr[i] ^ arr[i-1]
-		arr.append(y)
-		to_binary(y)
-		print('\n')
+	for i in range(2^10000):
+		r = arr[i] ^ arr[i-1]
+		arr.append(r)
+		print_binary(r,2^64)
+		arr[i] = randint(0,2^64)
 		sleep(.2)
+	
+	return r
 
-	return xor(p,q)
+def OR(p):
+	q = randint(0,2^128)
+	arr  = [p , q]
+	print_binary(p,2^128)
+	print_binary(q,2^128)
 
-xor(255)
+	for i in range(2^10000):
+		r = arr[i] | arr[i-1]
+		arr.append(r)
+		print_binary(r,2^128)
+		arr[i] = randint(0,2^128)
+		sleep(.2)
+	
+	return r
 
+
+#XOR(randint(0,2^128))
+
+XOR(randint(0,2^128))
 '''
 	for i in range(maxsize):
 		
